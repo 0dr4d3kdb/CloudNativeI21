@@ -1,0 +1,24 @@
+package com.example.rabbitmq_tutorials;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
+
+@Component 
+public class Reciever {
+    @RabbitListener(queues = "hello")
+    public void recieveMessage(String message){
+        try{
+            String timestamp = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("HH:mm:ss.SSS"));
+            System.out.println(
+                "["+ timestamp +"] [✓] Mensaje recibido '"+ message + "'"
+            );
+        }catch (Exception e){
+            System.err.println("[x] Error enviando mensaje: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}

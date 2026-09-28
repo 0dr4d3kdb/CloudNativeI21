@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: rabbitmq-tutorials
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    connection-timeout: 10s
+    requested-heartbeat: 30s
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000ms
+        max-interval: 30000ms
+        multiplier: 2.0
+        max-retries: 3
+    listener:
+      type: simple
+      simple:
+        prefetch: 1
+        concurrency: 1
+        max-concurrency: 3
+        acknowledge-mode: auto
+        default-requeue-rejected: false
+        retry:
+          enabled: true
+          max-retries: 3
+
+server:
+  port: 8080
